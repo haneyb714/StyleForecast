@@ -35,4 +35,5 @@ ENV APP_ENV=production
 
 
 
-CMD ["sh", "-c", "php artisan migrate --force -vvv 2>&1 | tee /tmp/migration.log; php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"]
+
+CMD ["sh", "-c", "php artisan migrate --force -vvv 2>&1; echo MIGRATION_FINISHED; php artisan serve --host=0.0.0.0 --port=${PORT:-10000}"]
