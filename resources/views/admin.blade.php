@@ -333,13 +333,11 @@
         <span>Protected</span>
     @endif
 </td>
-
-</tr>
-
                             </tr>
                         @endforeach
                     </tbody>
                 </table>
+
 
             @else
 
