@@ -46,22 +46,16 @@
         ======================================== */
 
         .navbar {
-            min-height: 80px;
+       
+/* Make the header scroll normally */
+.navbar,
+header {
+    position: relative;
+    top: auto;
+    z-index: 10;
+    width: 100%;
+}
 
-            background: #ffffff;
-
-            border-bottom: 1px solid #e3eaf5;
-
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-
-            padding: 14px 5%;
-
-            position: sticky;
-            top: 0;
-
-            z-index: 100;
         }
 
         .logo {
@@ -72,7 +66,7 @@
 
             color: #1769e0;
 
-            font-size: 28px;
+            font-size: 30px;
 
             font-weight: 800;
         }
@@ -91,7 +85,7 @@
 
             border-radius: 12px;
 
-            font-size: 24px;
+            font-size: 30px;
         }
 
         .nav-links {
@@ -303,19 +297,56 @@
         }
 
 
-        /* ========================================
-           WEATHER + INSIGHT
-        ======================================== */
+/* ========================================
+   WEATHER + INSIGHT
+======================================== */
 
-        .dashboard-grid {
-            display: grid;
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 20px;
+    margin-bottom: 24px;
+    align-items: stretch;
+    width: 100%;
+    box-sizing: border-box;
+}
 
-            grid-template-columns: 1.55fr 1fr;
+/* Current Weather card */
+.weather-main {
+    min-width: 0;
+    width: 100%;
+    height: auto;
+    box-sizing: border-box;
+}
 
-            gap: 22px;
+/* Style Insight card */
+.style-insight {
+    min-width: 0;
+    width: 100%;
+    height: 100%; /* Ensures the card takes up the full height of its grid/flex parent */
+    box-sizing: border-box;
+    padding: 20px;
+    display: flex;
+    flex-direction: column; /* Stacks inner elements vertically (header, image area, etc.) */
+}
 
-            margin-bottom: 24px;
-        }
+/* Outfit image */
+.style-insight .insight-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    flex: 1; /* Forces the image to grow and fill the remaining vertical space in the card */
+    object-fit: cover;
+    object-position: center;
+    border-radius: 14px;
+}
+/* Tablet and mobile */
+@media (max-width: 850px) {
+    .dashboard-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+}
+
 
 
         /* ========================================
@@ -327,7 +358,7 @@
 
             overflow: hidden;
 
-            min-height: 360px;
+            min-height: 230px;
 
             border-radius: 22px;
 
@@ -406,19 +437,19 @@
         }
 
         .location-label {
-            font-size: 16px;
+            font-size: 20px;
 
             opacity: .82;
 
-            margin-bottom: 7px;
+            margin-top: 23px;
         }
 
         .location {
-            font-size: 34px;
+            font-size: 38px;
 
             font-weight: 800;
 
-            line-height: 1.15;
+            line-height: 1.50;
 
             white-space: nowrap;
         }
@@ -428,7 +459,7 @@
 
             opacity: .82;
 
-            font-size: 15px;
+            font-size: 25px;
         }
 
 
@@ -448,28 +479,15 @@
 
             position: absolute;
 
-            right: 12px;
+            right: 15px;
 
-            top: 5px;
+            top: 10px;
 
             z-index: 5;
 
             pointer-events: none;
         }
 
-        .weather-icon img {
-            width: 105px;
-            height: 105px;
-
-            object-fit: contain;
-
-            display: block;
-
-            filter:
-                drop-shadow(
-                    0 6px 10px rgba(0,0,0,.10)
-                );
-        }
 
 
         /* ========================================
@@ -481,7 +499,7 @@
 
             z-index: 3;
 
-            margin-top: 12px;
+            margin-top: 20px;
 
             display: flex;
 
@@ -495,7 +513,9 @@
         }
 
         .temperature {
-            font-size: 76px;
+            font-size: 100px;
+
+            margin-top: 17px;
 
             line-height: 1;
 
@@ -505,13 +525,15 @@
         }
 
         .degree {
-            font-size: 32px;
+            font-size: 40px;
+
+            margin-top: 15px;
 
             vertical-align: top;
         }
 
         .condition {
-            font-size: 21px;
+            font-size: 30px;
 
             font-weight: 700;
 
@@ -519,9 +541,9 @@
         }
 
         .feels {
-            font-size: 15px;
+            font-size: 20px;
 
-            margin-top: 5px;
+            margin-top: 7px;
 
             opacity: .78;
 
@@ -534,23 +556,17 @@
         ======================================== */
 
         .weather-stats {
-            position: absolute;
+    position: absolute;
+    z-index: 4;
 
-            z-index: 4;
+    bottom: 70px; /* Increased from 22px to move cards up */
+    left: 30px;
+    right: 30px;
 
-            bottom: 22px;
-
-            left: 30px;
-
-            right: 30px;
-
-            display: grid;
-
-            grid-template-columns:
-                repeat(3, 1fr);
-
-            gap: 10px;
-        }
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+}
 
         .stat {
             background: rgba(255,255,255,.13);
@@ -569,7 +585,7 @@
         .stat span {
             display: block;
 
-            font-size: 11px;
+            font-size: 16px;
 
             opacity: .78;
 
@@ -581,189 +597,211 @@
         }
 
 
-        /* ========================================
-           STYLE INSIGHT
-        ======================================== */
-
-        .insight-card {
-            background: white;
-
-            border: 1px solid #e4ebf5;
-
-            border-radius: 22px;
-
-            padding: 30px;
-
-            min-height: 360px;
-
-            box-shadow:
-                0 10px 30px rgba(35,63,100,.07);
-
-            text-align: center;
-        }
-
-        .card-heading {
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            gap: 10px;
-
-            margin-bottom: 20px;
-        }
-
-        .card-heading h2 {
-            font-size: 25px;
-
-            color: #172f55;
-        }
-
-        .card-heading span {
-            font-size: 11px;
-
-            color: #1769e0;
-
-            background: #edf5ff;
-
-            padding: 7px 9px;
-
-            border-radius: 7px;
-
-            font-weight: 700;
-        }
-
-        .tip-icon {
-            width: 72px;
-            height: 72px;
-
-            background: #edf5ff;
-
-            color: #1769e0;
-
-            border-radius: 17px;
-
-            display: flex;
-
-            align-items: center;
-
-            justify-content: center;
-
-            font-size: 38px;
-
-            margin: auto;
-        }
-
-        .insight-card h3 {
-            font-size: 27px;
-
-            color: #17345e;
-
-            margin: 16px 0 9px;
-        }
-
-        .insight-card p {
-            color: #75839a;
-
-            font-size: 15px;
-
-            line-height: 1.6;
-
-            max-width: 430px;
-
-            margin: auto;
-        }
-
-        .recommend-btn {
-            display: inline-block;
-
-            margin-top: 20px;
-
-            background: #1769e0;
-
-            color: white;
-
-            padding: 12px 18px;
-
-            border-radius: 10px;
-
-            font-size: 15px;
-
-            font-weight: 700;
-        }
-
-        .recommend-btn:hover {
-            background: #0d56c7;
-        }
-
-
-        /* ========================================
-           SECTION CARD
-        ======================================== */
-
-        .section-card {
-            background: white;
-
-            border: 1px solid #e4ebf5;
-
-            border-radius: 22px;
-
-            padding: 34px 32px;
-
-            margin-bottom: 24px;
-
-            box-shadow:
-                0 8px 28px rgba(35,63,100,.055);
-
-            text-align: left;
-        }
-
-        .section-title {
-            display: flex;
-
-            justify-content: space-between;
-
-            align-items: flex-start;
-
-            gap: 20px;
-
-            margin-bottom: 28px;
-
-            text-align: left;
-        }
-
-        .section-title h2 {
-            font-size: 30px;
-
-            font-weight: 800;
-
-            color: #123b63;
-
-            line-height: 1.2;
-        }
-
-        .section-title p {
-            font-size: 16px;
-
-            color: #71809a;
-
-            margin-top: 8px;
-
-            line-height: 1.5;
-        }
-
-        .section-link {
-            color: #1769e0;
-
-            font-size: 15px;
-
-            font-weight: 700;
-
-            white-space: nowrap;
-
-            padding-top: 7px;
-        }
+/* Align both dashboard cards */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    align-items: stretch;
+    gap: 24px;
+    width: 100%;
+}
+
+/* ===== STYLE INSIGHT CARD ONLY ===== */
+.style-insight {
+    width: 100%;
+    min-width: 0;
+    min-height: 0;
+    height: auto;
+    padding: 26px;
+    box-sizing: border-box;
+    border-radius: 28px;
+    background: rgba(255, 255, 255, 0.97);
+    box-shadow: 0 12px 30px rgba(40, 100, 180, 0.12);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+/* Header */
+.insight-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 24px;
+}
+
+.insight-header h2 {
+    margin: 0;
+    color: #12376a;
+    font-size: 27px;
+    font-weight: 800;
+}
+
+.today-badge {
+    padding: 9px 14px;
+    border-radius: 20px;
+    background: #e5f0ff;
+    color: #1769ed;
+    font-size: 12px;
+    font-weight: 800;
+    white-space: nowrap;
+}
+
+/* Image and details */
+
+.insight-content {
+    display: grid;
+    grid-template-columns: 180px minmax(0, 1fr);
+    gap: 16px;
+    align-items: start;
+    width: 100%;
+}
+
+/* Control image size independently */
+.insight-image {
+    width: 180px;
+    height: 220px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 14px;
+    display: block;
+}
+
+/* Allow details to use the remaining space */
+.insight-details {
+    min-width: 0;
+}
+
+
+
+/* STYLE INSIGHT IMAGE FIX */
+.style-insight .outfit-image {
+    height: 390px;
+    min-height: 0;
+    overflow: hidden;
+    border-radius: 20px;
+    background: #edf5ff;
+}
+
+.style-insight .outfit-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+    object-fit: cover;
+    object-position: center;
+}
+
+
+/* Outfit information */
+.outfit-details {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.outfit-details h2 {
+    margin: 0 0 10px;
+    color: #12376a;
+    font-size: 28px;
+    line-height: 1.3;
+    font-weight: 800;
+}
+
+.subtitle {
+    margin: 0 0 16px;
+    color: #6480a7;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+/* Checklist */
+.outfit-list {
+    padding: 12px 15px;
+    background: #edf5ff;
+    border-radius: 18px;
+}
+
+.outfit-list p {
+    margin: 10px 0;
+    color: #345780;
+    font-size: 14px;
+    line-height: 1.45;
+}
+
+/* Outfit button */
+.outfit-button {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    margin-top: 18px;
+    padding: 15px 10px;
+    border-radius: 14px;
+    background: #1769ed;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 800;
+}
+
+.outfit-button:hover {
+    background: #0d50bd;
+}
+
+/* Tablet and mobile */
+@media (max-width: 700px) {
+    .style-insight {
+        padding: 20px;
+    }
+
+    .insight-content {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .outfit-image {
+        height: 300px;
+    }
+
+    .insight-header h2 {
+        font-size: 23px;
+    }
+
+    .outfit-details h2 {
+        font-size: 25px;
+    }
+}
+
+/* Tablet and mobile */
+@media (max-width: 900px) {
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .style-insight {
+        height: auto;
+        min-height: 400px;
+    }
+
+    .insight-content {
+        min-height: 300px;
+    }
+}
+
+@media (max-width: 550px) {
+    .insight-content {
+        grid-template-columns: 1fr;
+    }
+
+    .outfit-image {
+        height: 250px;
+    }
+
+    .outfit-button {
+        margin-top: 15px;
+    }
+}
 
 
         /* ========================================
@@ -809,7 +847,7 @@
         .forecast-day {
             color: #526b8b;
 
-            font-size: 15px;
+            font-size: 17px;
 
             font-weight: 700;
         }
@@ -831,7 +869,7 @@
         .forecast-condition {
             color: #8390a3;
 
-            font-size: 13px;
+            font-size: 16px;
 
             margin-top: 5px;
         }
@@ -895,7 +933,7 @@
 .section-card:has(.outfit-grid) .section-title p {
     margin: 0 !important;
     color: #7286a5 !important;
-    font-size: 13px !important;
+    font-size: 16px !important;
     line-height: 1.7;
 }
 
@@ -911,7 +949,7 @@
     border-radius: 30px !important;
     background: linear-gradient(135deg, #f0f8ff, #e2f0ff) !important;
     color: #1268d8 !important;
-    font-size: 12px !important;
+    font-size: 16px !important;
     font-weight: 800 !important;
     text-decoration: none !important;
     box-shadow: 0 3px 9px rgba(40, 117, 207, 0.05);
@@ -1071,7 +1109,7 @@
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.95);
     color: #46678f;
-    font-size: 11px !important;
+    font-size: 15px !important;
     font-weight: 850 !important;
     box-shadow: 0 3px 8px rgba(40, 73, 112, 0.07);
 }
@@ -1092,7 +1130,7 @@
 .section-card:has(.outfit-grid) .outfit-card p {
     margin: 0 0 17px !important;
     color: #526b8d !important;
-    font-size: 12px !important;
+    font-size: 15px !important;
     line-height: 1.85 !important;
 }
 
@@ -1107,7 +1145,7 @@
     padding: 9px 13px !important;
     border: 1px solid transparent !important;
     border-radius: 25px !important;
-    font-size: 10px !important;
+    font-size: 15px !important;
     font-weight: 850 !important;
     letter-spacing: 0.4px;
     line-height: 1.4 !important;
@@ -1218,7 +1256,7 @@
 .section-card:has(.outfit-grid) .section-title p {
     margin: 0 !important;
     color: #7286a5 !important;
-    font-size: 13px !important;
+    font-size: 15px !important;
     line-height: 1.7;
 }
 
@@ -1415,7 +1453,7 @@
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.95);
     color: #46678f;
-    font-size: 11px !important;
+    font-size: 13px !important;
     font-weight: 850 !important;
     box-shadow: 0 3px 8px rgba(40, 73, 112, 0.07);
 }
@@ -1439,7 +1477,7 @@
 .section-card:has(.outfit-grid) .outfit-card p {
     margin: 0 0 17px !important;
     color: #657c9c !important;
-    font-size: 12px !important;
+    font-size: 15px !important;
     line-height: 1.85 !important;
 }
 
@@ -1674,13 +1712,11 @@
         ======================================== */
 
         footer {
+            margin-top: 35px;
+            padding: 22px 15px;
+            color: #eaf4ff;
             text-align: center;
-
-            color: #94a0b1;
-
-            font-size: 14px;
-
-            padding: 10px 0 30px;
+    background: linear-gradient(110deg, #123b70, #1e64ac);
         }
 
 
@@ -1883,11 +1919,6 @@
                 right: 0;
 
                 top: 65px;
-            }
-
-            .weather-icon img {
-                width: 80px;
-                height: 80px;
             }
 
 
@@ -2124,14 +2155,14 @@ input:focus-visible {
 .today-outfit-fix .tof-header h2 {
     margin: 0 0 8px;
     color: #16345b;
-    font-size: 24px;
+    font-size: 30px;
     font-weight: 700;
 }
 
 .today-outfit-fix .tof-header p {
     margin: 0;
     color: #62748a;
-    font-size: 14px;
+    font-size: 19px;
 }
 
 .today-outfit-fix .tof-button {
@@ -2212,7 +2243,7 @@ input:focus-visible {
     border-radius: 20px;
     background: #ffffff;
     color: #3265a8;
-    font-size: 10px;
+    font-size: 15px;
     font-weight: 600;
 }
 
@@ -2228,21 +2259,21 @@ input:focus-visible {
 .today-outfit-fix .tof-content small {
     margin-bottom: 8px;
     color: #7b8798;
-    font-size: 11px;
+    font-size: 15px;
     letter-spacing: 1px;
 }
 
 .today-outfit-fix .tof-content h3 {
     margin: 0 0 10px;
     color: #16345b;
-    font-size: 17px;
+    font-size: 22px;
     line-height: 1.4;
 }
 
 .today-outfit-fix .tof-content p {
     margin: 0 0 16px;
     color: #62748a;
-    font-size: 14px;
+    font-size: 17px;
     line-height: 1.7;
 }
 
@@ -2281,7 +2312,7 @@ input:focus-visible {
 .wtf-header p {
     margin: 0;
     color: #62748a;
-    font-size: 14px;
+    font-size: 15px;
 }
 
 .wtf-grid {
@@ -2333,7 +2364,7 @@ input:focus-visible {
 .wtf-card p {
     margin: 0 0 18px;
     color: #62748a;
-    font-size: 14px;
+    font-size: 15px;
     line-height: 1.8;
 }
 
@@ -2344,7 +2375,7 @@ input:focus-visible {
     border-radius: 20px;
     background: #edf4ff;
     color: #3265a8;
-    font-size: 12px;
+    font-size: 15px;
     font-weight: 600;
 }
 
@@ -2597,7 +2628,7 @@ input:focus-visible {
 }
 
 .today-outfit-fix .tof-content p {
-    margin: 0 0 13px;
+    margin: 0 0 15px;
     color: #6684ac;
     font-size: 12px;
     line-height: 1.7;
@@ -2700,7 +2731,7 @@ input:focus-visible {
     grid-row: 2 / 4 !important;
     margin: 0 0 12px !important;
     color: #6684ac !important;
-    font-size: 13px !important;
+    font-size: 15px !important;
     line-height: 1.7 !important;
 }
 
@@ -2829,6 +2860,924 @@ input:focus-visible {
 }
 
 
+/* Navbar container */
+.navbar {
+    background: #ffffff;
+    border-bottom: 1px solid #e2edfa;
+    box-shadow: 0 3px 14px rgba(30, 90, 160, 0.05);
+}
+
+/* StyleForecast logo */
+.navbar .logo {
+    color: #1769e8;
+    text-decoration: none;
+}
+
+/* Logo icon */
+.navbar .logo-icon {
+    background: #1769e8;
+    color: #ffffff;
+}
+
+/* Navigation container */
+.navbar .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+/* All four navigation buttons */
+.navbar .nav-links .nav-item {
+    background: #eff6ff;
+    color: #526b8a;
+    border: 1.5px solid #dceaff;
+    border-radius: 20px;
+
+    font-family: inherit;
+    font-weight: 700;
+    text-decoration: none;
+    text-align: center;
+
+    cursor: pointer;
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+/* Navigation icons */
+.navbar .nav-icon {
+    color: inherit;
+    transition: color 0.2s ease;
+}
+
+/* Hover: blue background, white text */
+.navbar .nav-links .nav-item:hover {
+    background: #1769e8;
+    color: #ffffff;
+    box-shadow: 0 5px 14px rgba(23, 105, 232, 0.18);
+}
+
+/* Active/current page */
+.navbar .nav-links .nav-item.active {
+    background: #1769e8;
+    color: #ffffff;
+    border-color: #1769e8;
+    box-shadow: 0 5px 14px rgba(23, 105, 232, 0.20);
+}
+
+/* Keep active button blue on hover */
+.navbar .nav-links .nav-item.active:hover {
+    background: #1769e8;
+    color: #ffffff;
+}
+
+/* Logout form alignment */
+.navbar .logout-form {
+    margin: 0;
+}
+
+/* Logout button inherits the shared navigation colors */
+.navbar .logout-btn {
+    font-family: inherit;
+    cursor: pointer;
+}
+
+
+/* Match the Home dashboard navbar button sizes */
+.navbar .nav-links .nav-item {
+    min-height: 64px;
+    padding: 0 24px;
+    box-sizing: border-box;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+
+    border-radius: 20px;
+
+    font-family: inherit;
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 1.3;
+    white-space: nowrap;
+
+    /* Keep the existing blue color styling */
+    background: #eff6ff;
+    color: #526b8a;
+    border: 1.5px solid #dceaff;
+
+    transition:
+        background-color 0.2s ease,
+        color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+/* Active page and hover colors */
+.navbar .nav-links .nav-item:hover,
+.navbar .nav-links .nav-item.active {
+    background: #1769e8;
+    color: #ffffff;
+}
+
+/* Keep icons white on blue buttons */
+.navbar .nav-links .nav-item:hover .nav-icon,
+.navbar .nav-links .nav-item.active .nav-icon {
+    color: #ffffff;
+}
+
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+}
+
+.logo-image {
+    width: 460px;
+    height: 140px;
+    object-fit: contain;
+    display: block;
+}
+
+
+/* ==========================================
+   STYLEFORECAST - DASHBOARD LAYOUT FIX
+========================================== */
+
+/* Prevent horizontal scrolling */
+html,
+body {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    overflow-x: clip;
+    box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+/* HEADER: logo and navigation on one row */
+.navbar {
+    position: relative;
+    top: auto;
+    z-index: 100;
+    width: 100%;
+    min-width: 0;
+    min-height: 88px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    padding: 14px 4%;
+}
+
+.logo {
+    flex: 0 1 auto;
+    min-width: 0;
+    white-space: nowrap;
+    font-size: clamp(20px, 1.8vw, 30px);
+}
+
+.nav-links {
+    display: flex;
+    flex: 0 1 auto;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 8px;
+    min-width: 0;
+}
+
+.nav-links a {
+    white-space: nowrap;
+    padding: 12px 15px;
+    font-size: 15px;
+}
+
+/* MAIN CONTENT */
+.container {
+    width: 94%;
+    max-width: 1450px;
+    min-width: 0;
+    margin: 0 auto;
+    padding: 32px 0 50px;
+}
+
+/* WELCOME TEXT AND CITY SEARCH */
+.welcome {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 22px;
+    min-width: 0;
+}
+
+.welcome-text {
+    flex: 1 1 320px;
+    min-width: 0;
+}
+
+.welcome-text h1 {
+    overflow-wrap: anywhere;
+}
+
+.search-box {
+    display: flex;
+    flex: 0 1 430px;
+    width: 100%;
+    max-width: 430px;
+    min-width: 0;
+}
+
+.search-box input {
+    width: 100%;
+    min-width: 0;
+}
+
+.search-box button {
+    flex-shrink: 0;
+    white-space: nowrap;
+}
+
+/* WEATHER AND STYLE INSIGHT */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns:
+        minmax(0, 1.55fr)
+        minmax(0, 1fr);
+    gap: 22px;
+    width: 100%;
+    min-width: 0;
+}
+
+.dashboard-grid > *,
+.weather-main,
+.style-insight {
+    min-width: 0;
+    max-width: 100%;
+}
+
+/* Keep weather statistics inside the card */
+.weather-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.weather-stat {
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+/* Forecast cards */
+.forecast-grid,
+.forecast-container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 16px;
+    min-width: 0;
+}
+
+.forecast-card {
+    min-width: 0;
+    max-width: 100%;
+}
+
+/* TABLET */
+@media (max-width: 1100px) {
+    .navbar {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .nav-links {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .dashboard-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .welcome {
+        align-items: stretch;
+    }
+
+    .search-box {
+        flex: 1 1 100%;
+        max-width: 100%;
+    }
+}
+
+/* MOBILE */
+@media (max-width: 600px) {
+    .navbar {
+        gap: 12px;
+        padding: 14px 4%;
+    }
+
+    .logo {
+        font-size: 23px;
+    }
+
+    .nav-links {
+        width: 100%;
+        gap: 6px;
+    }
+
+    .nav-links a {
+        padding: 10px;
+        font-size: 12px;
+    }
+
+    .container {
+        width: 92%;
+        padding-top: 24px;
+    }
+
+    .weather-stats {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .forecast-grid,
+    .forecast-container {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .weather-main {
+        padding: 20px;
+    }
+}
+
+
+/* Main dashboard layout */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(360px, 0.9fr);
+    gap: 24px;
+    align-items: stretch;
+    width: 100%;
+}
+
+/* Keep both cards aligned */
+.dashboard-cards > .weather-card,
+.dashboard-cards > .style-insight {
+    width: 100%;
+    min-width: 0;
+    height: 446px;
+    box-sizing: border-box;
+    margin: 0;
+}
+
+/* Style Insight */
+.style-insight {
+    background: rgba(255, 255, 255, 0.96);
+    border: 1px solid #dfeaf8;
+    border-radius: 24px;
+    padding: 18px 18px 12px;
+    box-shadow: 0 10px 30px rgba(40, 100, 180, 0.12);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    justify-content: flex-start;
+}
+
+.insight-header {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 12px;
+    padding-top: 4px;
+}
+
+.insight-header h2 {
+    margin: 0;
+    font-size: 24px;
+    line-height: 1.2;
+    color: #12376a;
+}
+
+.today-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #e5f0ff;
+    color: #1769ed;
+    border-radius: 12px;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+/* Outfit image and text */
+.insight-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: 18px;
+    flex: 1;
+    min-height: 0;
+    align-items: flex-start;
+}
+
+.outfit-image {
+    min-width: 0;
+    min-height: 0;
+    background: #edf5ff;
+    border-radius: 18px;
+    overflow: hidden;
+    border: 1px solid #dfeaf8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 320px;
+}
+
+.outfit-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    object-fit: contain;
+    object-position: center;
+}
+
+.outfit-details {
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background: #edf5ff;
+    border: 1px solid #dfeaf8;
+    border-radius: 18px;
+    padding: 18px 20px 14px;
+    box-sizing: border-box;
+}
+
+.outfit-details h2 {
+    margin: 0 0 10px;
+    color: #12376a;
+    font-size: clamp(28px, 2vw, 40px);
+    line-height: 1.1;
+}
+
+.subtitle {
+    margin: 0 0 14px;
+    color: #6480a7;
+    font-size: 14px;
+}
+
+.outfit-list {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+    margin: 0;
+}
+
+.outfit-list p {
+    margin: 8px 0;
+    font-size: 15px;
+    color: #345780;
+    line-height: 1.6;
+}
+
+.outfit-button {
+    display: block;
+    margin-top: auto;
+    padding: 13px 8px;
+    background: #1769ed;
+    color: white;
+    text-align: center;
+    border-radius: 12px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bold;
+}
+
+.outfit-button:hover {
+    background: #0d50bd;
+}
+
+/* Responsive screens */
+@media (max-width: 1000px) {
+    .dashboard-cards {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .dashboard-cards > .weather-card,
+    .dashboard-cards > .style-insight {
+        height: auto;
+        min-height: 400px;
+    }
+
+    .insight-content {
+        grid-template-columns: minmax(0, 1fr);
+        min-height: 300px;
+    }
+}
+
+@media (max-width: 550px) {
+    .style-insight {
+        padding: 16px 14px 12px;
+    }
+
+    .insight-header {
+        margin-bottom: 12px;
+    }
+
+    .outfit-image {
+        min-height: 220px;
+    }
+
+    .outfit-image img {
+        min-height: 220px;
+    }
+
+    .outfit-details {
+        padding: 14px 16px;
+    }
+
+    .outfit-button {
+        margin-top: 16px;
+    }
+}
+
+
+.weather-icon img {
+    width: 200px;
+    height: 150px;
+    object-fit: contain;
+    margin-top: 30px;
+    transform: translateX(-30px);
+}
+
+.outfit-details {
+    padding: 18px 20px 14px;
+    margin: 0;
+    border-radius: 18px;
+    border: 1px solid transparent;
+    transition: 0.3s ease;
+}
+
+.outfit-details h2 {
+    margin-top: 0;
+    font-size: 24px;
+}
+
+.outfit-details .subtitle {
+    margin-bottom: 14px;
+    font-size: 15px;
+}
+
+.outfit-list p {
+    margin: 8px 0;
+    font-size: 15px;
+}
+
+/* Rainy theme */
+.rainy-details {
+    background: linear-gradient(135deg, #e8f4ff, #f7fbff);
+    border-color: #b9d8ef;
+    color: #315b7d;
+}
+
+/* Cloudy theme */
+.cloudy-details {
+    background: linear-gradient(135deg, #f0f3f7, #ffffff);
+    border-color: #d5dee8;
+    color: #526477;
+}
+
+/* Sunny theme */
+.sunny-details {
+    background: linear-gradient(135deg, #fff5df, #ffffff);
+    border-color: #f1dfb5;
+    color: #8b681e;
+}
+
+/* ===== COMPACT STYLE INSIGHT ===== */
+.style-insight {
+    background: #fff;
+    border-radius: 20px;
+    padding: 20px;
+    min-width: 0;
+    height: fit-content;
+    box-sizing: border-box;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(18, 57, 111, 0.08);
+}
+
+.insight-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.insight-header h2 {
+    color: #12396f;
+    font-size: 22px;
+    font-weight: 800;
+    line-height: 1.3;
+    margin: 0;
+}
+
+.today-badge {
+    display: inline-block;
+    background: #e8f1ff;
+    color: #0878ed;
+    padding: 6px 10px;
+    border-radius: 20px;
+    font-size: 10px;
+    font-weight: 700;
+}
+/* =========================================
+   STYLEFORECAST — STYLE INSIGHT REDESIGN
+========================================= */
+
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+    align-items: stretch;
+    gap: 18px;
+    width: min(94%, 1500px);
+    margin: 20px auto;
+}
+
+/* Main insight card */
+.style-insight,
+.outfit-insight {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    height: 100%;
+    padding: 22px;
+    box-sizing: border-box;
+    border: 1px solid #e0ebf9;
+    border-radius: 22px;
+    background: #ffffff;
+    box-shadow: 0 8px 24px rgba(30, 90, 160, 0.08);
+}
+
+/* Header */
+.insight-header {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 16px;
+}
+
+.insight-header h2 {
+    margin: 0;
+    color: #103c78;
+    font-size: 22px;
+    font-weight: 900;
+}
+
+.today-badge {
+    padding: 5px 10px;
+    border-radius: 20px;
+    background: #eaf3ff;
+    color: #1769ed;
+    font-size: 10px;
+    font-weight: 800;
+}
+
+/* Text left, image right */
+.insight-content {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.9fr);
+    align-items: stretch;
+    gap: 18px;
+    flex: 1;
+    min-height: 0;
+}
+
+/* Left side ("Cloudy Day" details card) */
+.outfit-details,
+.insight-details {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.outfit-details h2,
+.insight-details h3 {
+    margin: 0 0 5px;
+    color: #103c78;
+    font-size: 24px;
+    font-weight: 900;
+    line-height: 1.3;
+}
+
+.outfit-details .subtitle,
+.insight-subtitle {
+    margin: 0 0 14px;
+    color: #6681a5;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+/* Checklist - expands to fill extra space */
+.outfit-list,
+.insight-checklist {
+    flex: 1;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: #edf5ff;
+    list-style: none;
+    margin: 0 0 14px;
+    box-sizing: border-box;
+}
+
+.outfit-list p,
+.insight-checklist li {
+    margin: 7px 0;
+    color: #315780;
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+.insight-checklist li:last-child {
+    margin-bottom: 0;
+}
+
+/* Right-side outfit image wrapper */
+.outfit-image,
+.insight-image-wrap {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    min-height: 0;
+    overflow: hidden;
+    border-radius: 16px;
+    background: #f0f6ff;
+}
+
+/* The Image itself */
+.outfit-image img,
+.style-insight img,
+.outfit-insight img,
+.insight-image {
+    display: block;
+    width: 100%;
+    height: 100%;
+    max-height: none !important;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 16px;
+}
+
+/* Button */
+.insight-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 11px 15px;
+    background: linear-gradient(110deg, #289af4, #0861df);
+    color: #fff !important;
+    text-decoration: none !important;
+    border-radius: 9px;
+    font-size: 13px;
+    font-weight: 700;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.insight-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 14px rgba(8, 97, 223, 0.22);
+}
+
+/* Responsive layout */
+@media (max-width: 900px) {
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .style-insight,
+    .outfit-insight {
+        height: auto !important;
+    }
+    
+    .outfit-image img,
+    .insight-image {
+        height: 280px;
+    }
+}
+
+/* Responsive layout */
+@media (max-width: 900px) {
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .style-insight,
+    .outfit-insight {
+        height: auto !important;
+    }
+    
+    .outfit-image img,
+    .insight-image {
+        height: 280px;
+    }
+}
+
+@media (max-width: 600px) {
+    .style-insight,
+    .outfit-insight {
+        padding: 16px;
+    }
+
+    .insight-btn {
+        width: 100%;
+        box-sizing: border-box;
+    }
+}
+
+/* Tablet */
+@media (max-width: 1000px) {
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
+
+    .style-insight {
+        min-height: 380px;
+    }
+
+    .insight-content {
+        min-height: 280px;
+    }
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .style-insight {
+        min-height: auto;
+        padding: 16px;
+    }
+
+    .insight-content {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 14px;
+    }
+
+    .outfit-image {
+        height: 250px;
+    }
+
+    .outfit-image img {
+        min-height: 0;
+        height: 250px;
+        object-fit: contain;
+    }
+
+    .outfit-details h2 {
+        font-size: 21px;
+    }
+}
+
+.outfit-view-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-start;
+    margin-top: auto;
+    padding: 11px 18px;
+    border-radius: 12px;
+    background: #1769e8;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.3;
+    text-decoration: none;
+    transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.outfit-view-button:hover {
+    background: #0d56c7;
+    box-shadow: 0 5px 14px rgba(23, 105, 232, 0.2);
+}
+
     </style>
 
 </head>
@@ -2837,62 +3786,55 @@ input:focus-visible {
 <body>
 
 
-    <!-- ========================================
-         NAVBAR
-    ======================================== -->
+  
+<!-- STYLEFORECAST NAVBAR -->
+<nav class="navbar">
 
-    <nav class="navbar">
+    
+<a href="{{ url('/dashboard') }}" class="logo">
+    <img
+        src="{{ asset('images/forecastlogo.png') }}"
+        alt="StyleForecast Logo"
+        class="logo-image"
+    >
+</a>
 
-        <a href="/dashboard" class="logo">
 
-            <span class="logo-icon">
-                ☁
-            </span>
+    <div class="nav-links">
 
-            StyleForecast
-
+        <!-- HOME -->
+        <a href="/dashboard"
+           class="nav-item {{ request()->is('dashboard') ? 'active' : '' }}">
+            <span class="nav-icon">⌂</span>
+            <span>Home</span>
         </a>
 
+        <!-- OUTFIT RECOMMENDATIONS -->
+        <a href="/outfit-recommendations"
+           class="nav-item {{ request()->is('outfit-recommendations') ? 'active' : '' }}">
+            <span class="nav-icon">♧</span>
+            <span>Outfit Recommendations</span>
+        </a>
 
-        <div class="nav-links">
+        <!-- LOG OUT -->
+        <form action="/logout" method="POST" class="logout-form">
+            @csrf
+            <button type="submit" class="nav-item logout-btn">
+                <span class="nav-icon">⇥</span>
+                <span>Log Out</span>
+            </button>
+        </form>
 
-            <a
-                href="/dashboard"
-                class="active"
-            >
-                Home
-            </a>
+        <!-- MY PROFILE -->
+        <a href="{{ route('profile') }}"
+           class="nav-item {{ request()->routeIs('profile') ? 'active' : '' }}">
+            <span class="nav-icon">♟</span>
+            <span>My Profile</span>
+        </a>
 
+    </div>
+</nav>
 
-            <a href="/outfit-recommendations">
-                Outfit Recommendations
-            </a>
-
-
-            <form
-                action="/logout"
-                method="POST"
-                class="logout-form"
-            >
-
-                @csrf
-
-                <button
-                    type="submit"
-                    class="logout-btn"
-                >
-                    Log Out
-                </button>
-
-                
-<a href="{{ route('profile') }}">My Profile</a>
-
-
-            </form>
-
-        </div>
-
-    </nav>
 
 
 
@@ -2993,93 +3935,61 @@ input:focus-visible {
                         ?? 0
                     );
 
+$feelsLike =
+    round(
+        $weather['feels_like']
+        ?? $temperature
+    );
 
-                $feelsLike =
-                    round(
-                        $weather['feels_like']
-                        ?? $temperature
-                    );
+$wind =
+    round(
+        $weather['wind_speed']
+        ?? $weather['wind']
+        ?? 0
+    );
 
+$rainChance = 0;
 
-                $wind =
-                    round(
-                        $weather['wind_speed']
-                        ?? $weather['wind']
-                        ?? 0
-                    );
+if (
+    isset(
+        $weather['forecast']
+        ['precipitation_probability_mean'][0]
+    )
+) {
+    $rainChance = round(
+        $weather['forecast']
+        ['precipitation_probability_mean'][0]
+    );
+}
 
+ // OUTFIT RECOMMENDATION
 
-                $rainChance = 0;
+$code = (int) ($weather['weather_code'] ?? -1);
 
+$rainyCodes = [
+    51, 53, 55, 56, 57,
+    61, 63, 65, 66, 67,
+    80, 81, 82, 95, 96, 99
+];
 
-                if (
-                    isset(
-                        $weather['forecast']
-                        ['precipitation_probability_mean'][0]
-                    )
-                ) {
+$cloudyCodes = [2, 3, 45, 48];
 
-                    $rainChance =
-                        round(
-                            $weather['forecast']
-                            ['precipitation_probability_mean'][0]
-                        );
+if (in_array($code, $rainyCodes, true)) {
+    $outfitType = 'Rainy Day';
+    $outfitDescription = 'Wear quick-drying clothes and water-resistant shoes. Bring an umbrella or waterproof jacket.';
 
-                }
+} elseif (in_array($code, $cloudyCodes, true)) {
+    $outfitType = 'Cloudy Day';
+    $outfitDescription = 'Wear a comfortable T-shirt, jeans, and sneakers. Bring a light jacket if it gets cool or windy.';
 
-
-                if (
-                    $rainChance >= 50
-                    ||
-                    ($code >= 51 && $code <= 99)
-                ) {
-
-                    $outfitType =
-                        'Rainy Day';
-
-
-                    $outfitDescription =
-                        'Stay comfortable and prepared with rain-friendly clothing.';
-
-                }
-
-                elseif ($temperature >= 30) {
-
-                    $outfitType =
-                        'Light & Breezy';
-
-
-                    $outfitDescription =
-                        'Perfect weather for lightweight and breathable clothes.';
-
-                }
-
-                elseif ($temperature >= 27) {
-
-                    $outfitType =
-                        'Casual Summer';
-
-
-                    $outfitDescription =
-                        'Keep your outfit simple, cool, and comfortable.';
-
-                }
-
-                else {
-
-                    $outfitType =
-                        'Comfort Casual';
-
-
-                    $outfitDescription =
-                        'A light casual outfit should keep you comfortable today.';
-
-                }
-
-            @endphp
+} else {
+    $outfitType = 'Comfort Casual';
+    $outfitDescription = 'Choose comfortable, breathable clothes suitable for the current temperature.';
+}
 
 
 
+@endphp
             <!-- ========================================
                  WEATHER + STYLE INSIGHT
             ======================================== -->
@@ -3120,10 +4030,11 @@ input:focus-visible {
 
                         <div class="weather-icon">
 
-                            <img
-                                src="{{ asset('images/weather-logo.png') }}"
-                                alt="Weather"
-                            >
+                            
+<img
+    src="{{ asset('images/' . ($weatherImage ?? 'cloudy.png')) }}"
+    alt="Weather"
+>
 
                         </div>
 
@@ -3213,51 +4124,98 @@ input:focus-visible {
 
 
 
-                <!-- STYLE INSIGHT -->
+<div class="style-insight">
+    <div class="insight-header">
+        <h2>✨ Style Insight</h2>
+        <span class="today-badge">FOR TODAY</span>
+    </div>
 
-                <section class="insight-card">
+    @php
+        $weatherCode = (int) data_get($weather ?? [], 'weather_code', -1);
 
+        $isRainy = in_array($weatherCode, [
+            51, 53, 55, 56, 57,
+            61, 63, 65, 66, 67,
+            80, 81, 82, 95, 96, 99
+        ], true);
 
-                    <div class="card-heading">
+        $isCloudy = in_array($weatherCode, [2, 3, 45, 48], true);
+    @endphp
 
-                        <h2>
-                            ✨ Style Insight
-                        </h2>
+    <div class="insight-content">
+        <div class="outfit-image">
+            <img
+                src="{{ asset('images/' . ($isRainy ? 'rainyout.png' : 'cloudyout.png')) }}"
+                alt="{{ $isRainy ? 'Rainy day outfit' : 'Cloudy day outfit' }}"
+            >
+        </div>
 
-                        <span>
-                            FOR TODAY
-                        </span>
+        @if($isRainy)
+            <div class="outfit-details rainy-details">
+                <h2>🌧️ Rainy Day</h2>
+                <p class="subtitle">Stay dry, stay stylish 💙</p>
 
-                    </div>
-
-
-                    <div class="tip-icon">
-                        👕
-                    </div>
-
-
-                    <h3>
-                        {{ $outfitType }}
-                    </h3>
-
-
-                    <p>
-                        {{ $outfitDescription }}
-                    </p>
-
-
-                    <a
-                        href="/outfit-recommendations"
-                        class="recommend-btn"
-                    >
-                        View Outfit Ideas →
-                    </a>
-
-
-                </section>
-
-
+                <div class="outfit-list">
+                    <p>✓ Waterproof jacket</p>
+                    <p>✓ Quick-dry shirt</p>
+                    <p>✓ Cargo pants</p>
+                    <p>✓ Water-resistant shoes</p>
+                    <p>✓ Umbrella</p>
+                    <p>✓ Backpack</p>
+                </div>
+                <a href="{{ url('/outfit-recommendations') }}" class="outfit-view-button">
+                    View Outfit →
+                </a>
             </div>
+        @elseif($isCloudy)
+            <div class="outfit-details cloudy-details">
+                <h2>☁️Cloudy Day</h2>
+                <p class="subtitle">Stay comfy, stay stylish 🤍</p>
+
+                <div class="outfit-list">
+                    <p>✓ Breathable T-shirt</p>
+                    <p>✓ Lightweight pants</p>
+                    <p>✓ Comfortable sneakers</p>
+                    <p>✓ Casual jeans</p>
+                    <p>✓ Small shoulder bag</p>
+                    <p>✓ Cap or umbrella</p>
+                </div>
+                <a href="{{ url('/outfit-recommendations') }}" class="outfit-view-button">
+                    View Outfit →
+                </a>
+            </div>
+        @else
+            <div class="outfit-details sunny-details">
+                <h2>☀️Sunny Day</h2>
+                <p class="subtitle">Stay cool, stay stylish 💛</p>
+
+                <div class="outfit-list">
+                    <p>✓ Lightweight T-shirt</p>
+                    <p>✓ Breathable shorts or pants</p>
+                    <p>✓ Comfortable sneakers</p>
+                    <p>✓ Sunglasses</p>
+                    <p>✓ Cap or hat</p>
+                    <p>✓ Water bottle</p>
+                </div>
+                <a href="{{ url('/outfit-recommendations') }}" class="outfit-view-button">
+                    View Outfit →
+                </a>
+            </div>
+        @endif
+    </div>
+</div>
+    </div>
+</div>
+
+        </div>
+
+        </div>
+    </div>
+
+</div>
+    </div>
+</div>
+
 
 
 
@@ -3303,32 +4261,6 @@ input:focus-visible {
                 @if(count($dates) > 0)
 
 
-                    <section class="section-card">
-
-
-                        <div class="section-title">
-
-                            <div>
-
-                                <h2>
-                                    📅 3-Day Forecast
-                                </h2>
-
-                                <p>
-                                    Plan your outfits around the upcoming weather.
-                                </p>
-
-                            </div>
-
-
-                            <span class="section-link">
-
-                                📍
-                                {{ $weather['city'] ?? $city }}
-
-                            </span>
-
-                        </div>
 
 
 

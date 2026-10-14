@@ -403,10 +403,19 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             gap: 20px;
-            padding: 20px;
+            padding: 20px 24px;
             margin-top: 25px;
-            background: #f0f6ff;
-            border-radius: 16px;
+            background: #edf5ff;
+            border: 1px solid #dfeeff;
+            border-radius: 18px;
+            align-items: center;
+        }
+
+        .account-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            min-height: 96px;
         }
 
         .account-item strong {
@@ -414,6 +423,7 @@
             margin-bottom: 8px;
             color: var(--blue);
             font-size: 14px;
+            line-height: 1.5;
         }
 
         .account-item p {
@@ -421,6 +431,7 @@
             font-size: 13px;
             line-height: 1.7;
             overflow-wrap: anywhere;
+            margin: 0;
         }
 
         .account-item + .account-item {
@@ -434,6 +445,8 @@
             flex-wrap: wrap;
             gap: 13px;
             margin-top: 26px;
+            justify-content: flex-start;
+            align-items: center;
         }
 
         .btn {
@@ -1612,6 +1625,8 @@ main {
     background: rgba(255, 255, 255, 0.95);
     box-shadow: 0 12px 35px rgba(42, 92, 157, 0.08);
     transition: box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 .card:hover {
@@ -1750,16 +1765,22 @@ main {
 .actions {
     gap: 13px;
     margin-top: 28px;
+    align-items: center;
+    justify-content: flex-start;
 }
 
 .btn {
     min-height: 48px;
     border-radius: 13px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .btn-primary {
     background: linear-gradient(135deg, #3999ff, #1760df);
     box-shadow: 0 7px 17px #1769e82a;
+    min-width: 180px;
 }
 
 .btn-primary:hover {
@@ -1991,7 +2012,37 @@ main {
     border-color: #1769e8;
 }
 
+/* STYLEFORECAST LOGO */
+.brand {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    margin: 5px 0 42px !important;
+    padding: 0 12px !important;
+    text-decoration: none;
+}
 
+.brand-logo {
+    display: block;
+    width: 290px;
+    max-width: 100%;
+    height: 85px;
+    object-fit: contain;
+    object-position: left center;
+}
+
+/* Responsive logo */
+@media (max-width: 760px) {
+    .brand {
+        margin-bottom: 20px !important;
+    }
+
+    .brand-logo {
+        width: 240px;
+        height: 70px;
+    }
+}
     </style>
 </head>
 
@@ -2001,11 +2052,15 @@ main {
 
     
 <aside class="sidebar">
-    <div class="brand">
-        <div class="brand-icon">☁</div>
-        <span>StyleForecast</span>
-    </div>
 
+   <!-- STYLEFORECAST LOGO -->
+<a href="{{ url('/dashboard') }}" class="brand">
+    <img
+        src="{{ asset('images/forecastlogo.png') }}"
+        alt="StyleForecast Logo"
+        class="brand-logo"
+    >
+</a>
     <nav class="sidebar-nav">
         <a href="{{ url('/dashboard') }}" class="menu-link">
             <span class="icon">⌂</span>
@@ -2342,6 +2397,46 @@ main {
 
     </main>
 </div>
+
+<style>
+    .content-grid {
+        grid-template-columns: minmax(0, 1.58fr) minmax(260px, 0.82fr);
+        align-items: stretch;
+    }
+
+    .card {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .right-column {
+        align-self: stretch;
+        gap: 18px;
+    }
+
+    .account-note {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        align-items: center;
+        padding: 18px 22px;
+    }
+
+    .account-item {
+        min-height: 76px;
+        justify-content: center;
+    }
+
+    .actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 12px;
+    }
+
+    .btn-primary {
+        min-width: 182px;
+    }
+</style>
 
 <!-- PROFILE PICTURE PREVIEW -->
 <script>

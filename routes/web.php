@@ -110,50 +110,49 @@
     });
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | Register
-    |--------------------------------------------------------------------------
-    */
+   
+/*
+|--------------------------------------------------------------------------
+| Register
+|--------------------------------------------------------------------------
+*/
 
-    Route::get('/register', function () {
+Route::get('/register', function () {
 
-        if (Auth::check()) {
-
-            if (Auth::user()->role === 'admin') {
-                return redirect('/admin');
-            }
-
-            return redirect('/dashboard');
+    if (Auth::check()) {
+        if (Auth::user()->role === 'admin') {
+            return redirect('/admin');
         }
 
-        return view('register');
-
-    })->name('register');
-
-
-    Route::post('/register', function (Request $request) {
-
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6|confirmed',
-        ]);
-
-        $user = User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => 'user',
-        ]);
-
-        Auth::login($user);
-
-        $request->session()->regenerate();
-
         return redirect('/dashboard');
+    }
 
-    });
+    return view('register');
+
+})->name('register');
+
+
+Route::post('/register', function (Request $request) {
+
+    $request->validate([
+        'name' => 'required|string|max:255',
+        'email' => 'required|email|unique:users,email',
+        'password' => 'required|string|min:6|confirmed',
+    ]);
+
+    $user = User::create([
+        'name' => $request->name,
+        'email' => $request->email,
+        'password' => Hash::make($request->password),
+        'role' => 'user',
+    ]);
+
+    Auth::login($user);
+    $request->session()->regenerate();
+
+    return redirect('/dashboard');
+
+})->name('register.store');
 
 
     /*
@@ -208,18 +207,28 @@
         | show the saved weather first.
         |--------------------------------------------------------------------------
         */
+if ($requestedCity === '' && is_array($savedWeather)) {
 
-        if ($requestedCity === '' && is_array($savedWeather)) {
+    $weather = $savedWeather;
 
-            $weather = $savedWeather;
+    $weatherCode = (int) ($weather['weather_code'] ?? 0);
 
-            return view('dashboard', [
-                'city' => $weather['city'] ?? 'Lapu-Lapu City',
-                'weather' => $weather,
-                'error' => null,
-            ]);
-        }
+    $rainyCodes = [
+        51, 53, 55, 56, 57,
+        61, 63, 65, 66, 67,
+        80, 81, 82, 95, 96, 99
+    ];
 
+    return view('dashboard', [
+        'city' => $weather['city'] ?? 'Lapu-Lapu City',
+        'weather' => $weather,
+        'weatherImage' => in_array($weatherCode, $rainyCodes)
+            ? 'rainy.png'
+            : 'cloudy.png',
+        'weatherDescription' => weatherDescription($weatherCode),
+        'error' => null,
+    ]);
+}
 
         /*
         |--------------------------------------------------------------------------
@@ -242,7 +251,7 @@
 
             $context = stream_context_create([
         'http' => [
-            'timeout' => 5,
+            'timeout' => 15,
             'ignore_errors' => true,
             'header' =>
                 "User-Agent: StyleForecast/1.0\r\n" .
@@ -388,6 +397,18 @@
 
             $weatherCode =
                 $current['weather_code'] ?? 0;
+                
+
+if (in_array($weatherCode, [
+    51, 53, 55, 56, 57,
+    61, 63, 65, 66, 67,
+    80, 81, 82, 95, 96, 99
+])) {
+    $weatherImage = 'rainy.png';
+} else {
+    $weatherImage = 'cloudy.png';
+}
+
 
 
             $temperature =
@@ -488,56 +509,37 @@
             return view('dashboard', [
                 'city' => $foundCity,
                 'weather' => $weather,
+                'weatherImage' => $weatherImage,
                 'error' => null,
             ]);
 
-
-        } catch (Exception $e) {
-
-
-            /*
-            |--------------------------------------------------------------------------
-            | WEATHER API FAILED
-            |--------------------------------------------------------------------------
-            |
-            | If we have old weather data, show it instead of
-            | showing an empty dashboard.
-            |
-            */
+        } catch (\Throwable $e) {
 
             if (is_array($savedWeather)) {
+                $weather = $savedWeather;
+
+                $weatherImage = in_array(
+                    (int) ($weather['weather_code'] ?? 0),
+                    [
+                        51, 53, 55, 56, 57,
+                        61, 63, 65, 66, 67,
+                        80, 81, 82, 95, 96, 99
+                    ]
+                ) ? 'rainy.png' : 'cloudy.png';
 
                 return view('dashboard', [
-
-                    'city' =>
-                        $savedWeather['city']
-                        ?? 'Lapu-Lapu City',
-
-                    'weather' =>
-                        $savedWeather,
-
-                    'error' =>
-                        'Weather service is temporarily unavailable. Showing your last weather data.',
-
+                    'city' => $weather['city'] ?? 'Lapu-Lapu City',
+                    'weather' => $weather,
+                    'weatherImage' => $weatherImage,
+                    'error' => 'Weather service is temporarily unavailable. Showing your last weather data.',
                 ]);
             }
 
-
-            /*
-            |--------------------------------------------------------------------------
-            | No previous weather exists
-            |--------------------------------------------------------------------------
-            */
-
             return view('dashboard', [
-
                 'city' => $city,
-
                 'weather' => null,
-
-                'error' =>
-                    'Weather service is temporarily unavailable. Please try again.',
-
+                'weatherImage' => 'cloudy.png',
+                'error' => 'Weather service is temporarily unavailable. Please try again.',
             ]);
 
         }
@@ -586,42 +588,41 @@
             }
         }
 
+$recommendedCategory = 'cloudy';
 
-        $recommendedCategory = 'summer';
+if ($weather) {
+    $code = (int) ($weather['weather_code'] ?? 0);
+
+    $rainyCodes = [
+        51, 53, 55, 56, 57,
+        61, 63, 65, 66, 67,
+        80, 81, 82, 95, 96, 99
+    ];
+
+    if (in_array($code, $rainyCodes, true)) {
+        $recommendedCategory = 'rainy';
+
+    } elseif (in_array($code, [0, 1], true)) {
+        $recommendedCategory = 'sunny';
+
+    } elseif (in_array($code, [2, 3, 45, 48], true)) {
+        $recommendedCategory = 'cloudy';
+
+    } elseif (in_array($code, [71, 73, 75, 77, 85, 86], true)) {
+        $recommendedCategory = 'cold';
+
+    } else {
+        $recommendedCategory = 'cloudy';
+    }
+}
 
 
-        if ($weather) {
+return view('outfit-recommendations', [
+    'weather' => $weather,
+    'recommendedCategory' => $recommendedCategory,
+]);
 
-            $code =
-                $weather['weather_code'] ?? 0;
-
-            $temperature =
-                $weather['temperature'] ?? 0;
-
-
-            if ($code >= 51 && $code <= 99) {
-
-                $recommendedCategory = 'rainy';
-
-            } elseif ($temperature >= 28) {
-
-                $recommendedCategory = 'summer';
-
-            }
-
-        }
-
-
-        return view('outfit-recommendations', [
-
-            'weather' => $weather,
-
-            'recommendedCategory' =>
-                $recommendedCategory,
-
-        ]);
-
-    });
+   })->name('outfit.recommendations');
 
     
 /*
